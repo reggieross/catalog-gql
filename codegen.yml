@@ -1,0 +1,13 @@
+schema:
+  - schema.graphql
+overwrite: true
+federation: true
+generates:
+  ./src/GraphQL/generated/resolvers.ts:
+    config:
+      mappers:
+        Product: ../../types#Product
+        Category: ../../types#Category
+    plugins:
+      - typescript
+      - typescript-resolvers
