@@ -1,8 +1,7 @@
 export interface Product {
   id: string
   name: string
-  sale: boolean
-  brandId: string
+  brandId?: string
 }
 
 export interface Category {
@@ -11,3 +10,10 @@ export interface Category {
 }
 
 export type Environment = 'local' | 'dev' | 'prd';
+
+export interface Dao<T, U> {
+  list: (where: U) => Promise<T[]>
+}
+
+export interface Repository {
+}

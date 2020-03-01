@@ -26,7 +26,7 @@ export type Product = {
 };
 
 export type ProductFilterInput = {
-  categoryIds: Array<Scalars['String']>,
+  categoryIds?: Maybe<Array<Scalars['String']>>,
 };
 
 export type ProductFilters = {
