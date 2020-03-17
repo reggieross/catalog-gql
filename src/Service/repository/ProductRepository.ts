@@ -1,12 +1,12 @@
 import { Product, Repository } from "../../types";
-import { ProdactDao } from "./dao/ProductDao";
+import { ProductDao } from "./dao/ProductDao";
 
 export interface ProductRepository extends Repository {
   getProductsForUser: () => Promise<Product[]>;
 }
 
 const getProductsForUser = async () => {
-  return ProdactDao.list({});
+  return ProductDao.list({});
 };
 
 export const ProductRepository: ProductRepository = {

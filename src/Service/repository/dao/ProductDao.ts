@@ -25,6 +25,6 @@ const transform = (entities: ProductEntity[]): Product[] => {
   });
 };
 
-export const ProdactDao: Dao<Product, ProductFilterInput> = {
+export const ProductDao: Dao<Product, ProductFilterInput> = {
   list
 };
