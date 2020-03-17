@@ -4,6 +4,7 @@ import { resolvers } from "./resolvers";
 import { context } from "./context";
 import * as fs from "fs";
 import * as path from "path";
+import { buildFederatedSchema } from "@apollo/federation";
 
 const schema = fs.readFileSync(
   path.join(__dirname, "../../schema.graphql"),
@@ -14,8 +15,12 @@ const typeDefs = gql`
 `;
 
 export const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema: buildFederatedSchema([
+    {
+      typeDefs,
+      resolvers
+    }
+  ]),
   context,
   introspection: true,
   playground: true

@@ -20,5 +20,5 @@ import { server } from './GraphQL';
 server.applyMiddleware({ app, path: '/graphql' });
 
 app.listen({ port: ENV.RUN_PORT }, () => {
-  console.log(`product-gql listening at :${ENV.RUN_PORT}...`);
+  console.log(`catalog-gql listening at :${ENV.RUN_PORT}...`);
 });
