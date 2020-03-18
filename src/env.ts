@@ -2,7 +2,7 @@ import { Environment } from "./types";
 
 //TODO Switch to point at the env file
 export const ENV = {
-  RUN_PORT: process.env.RUN_PORT || "5000",
+  RUN_PORT: process.env.PORT || "5000",
   ENVIRONMENT: (process.env.ENVIRONMENT as Environment) || "dev",
   POSTGRES_DATABASE_URL:
     process.env.POSTGRES_DATABASE_URL ||
