@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "generate": "gql-gen",
-    "build": "tsc",
+    "build": "tsc && npm run generate",
     "start": "node ./build/index.js",
     "test:integration": "npm run test:migrate && jest --testPathPattern='integration.spec\\.ts$' --passWithNoTests --forceExit --ci",
     "test:migrate": "knex migrate:latest --env development && npx knex seed:run --env development"
