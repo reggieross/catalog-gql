@@ -11,13 +11,8 @@ interface ProductEntity {
 
 const list = async (where: ProductFilterInput): Promise<Product[]> => {
   const query = `SELECT * FROM product;`;
-  try {
-    const rows: ProductEntity[] = await getDB().any(query);
-    return transform(rows);
-  } catch (e) {
-    console.log(e);
-    return []
-  }
+  const rows: ProductEntity[] = await getDB().any(query);
+  return transform(rows);
 };
 
 const transform = (entities: ProductEntity[]): Product[] => {

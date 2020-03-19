@@ -11,7 +11,6 @@ let db;
 export const getDB = (): IDatabase<any> => {
   if (!db) {
     db = pgp(ENV.POSTGRES_DATABASE_URL);
-    console.log("create db");
   }
   return db;
 };
