@@ -1,4 +1,5 @@
 import { ProductRepository } from "./repository/ProductRepository";
+import {Product} from "../types";
 
 export interface ProductService {
 
@@ -10,7 +11,7 @@ export class ProductService {
     this.repo = ProductRepository;
   }
 
-  getProductsForUser = async () => {
+  getProductsForUser = (): Promise<Product[]> => {
     return this.repo.getProductsForUser();
   };
 }
