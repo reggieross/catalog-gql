@@ -9,7 +9,6 @@ export const authentication = async (
   next: NextFunction
 ) => {
   const token = CookieMonster.get(req, 'access_token');
-  console.log(token);
   const validation = await AuthenticationClient.validateToken(token);
   if (!validation.valid && ENV.ENVIRONMENT !== 'local') {
     res
