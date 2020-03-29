@@ -8,6 +8,7 @@ export const authentication = async (
   next: NextFunction
 ) => {
   const token = parse(req.headers.cookie)['accessToken'];
+  console.log(token)
   const validation = await AuthenticationClient.validateToken(token);
   if (!validation.valid) {
     res

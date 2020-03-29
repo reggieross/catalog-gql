@@ -11,7 +11,6 @@ export type Scalars = {
   Float: number,
 };
 
-
 export type Category = {
   __typename?: 'Category',
   id?: Maybe<Scalars['String']>,
