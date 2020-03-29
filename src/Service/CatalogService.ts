@@ -1,11 +1,11 @@
 import { ProductRepository } from "./repository/ProductRepository";
 import {Product} from "../types";
 
-export interface ProductService {
+export interface CatalogService {
 
 }
 
-export class ProductService {
+export class CatalogService {
   private repo: ProductRepository;
   constructor(userInfo: {}) {
     this.repo = ProductRepository;

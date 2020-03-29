@@ -1,6 +1,6 @@
 import { productDataLoader } from './dataloaders/productDataLoader';
 import { categoryDataLoader } from './dataloaders/categoryDataLoader';
-import { ProductService } from '../Service/ProductService';
+import { CatalogService } from '../Service/CatalogService';
 import { CookieMonster } from '../client/CookieClient';
 
 export type Context = ReturnType<typeof context>;
@@ -10,12 +10,12 @@ export const context = ({ req }) => {
 
   //TODO use middleWare to add user data to request
   const userInfo = {};
-  const productService = new ProductService(userInfo);
+  const catalogService = new CatalogService(userInfo);
 
   return {
     token,
-    productDataLoader: productDataLoader(token, productService),
+    productDataLoader: productDataLoader(token, catalogService),
     categoryDataLoader: categoryDataLoader(token),
-    productService,
+    catalogService,
   };
 };
