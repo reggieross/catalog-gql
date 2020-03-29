@@ -26,7 +26,7 @@ type Product {
   category: [Category!]!
 }
 
-type Category {
+type Category @auth {
   id: String
   name: String
   product: [Product!]!

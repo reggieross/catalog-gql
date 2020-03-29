@@ -7,30 +7,30 @@ services:
       POSTGRES_USER: intergration-test-user
       POSTGRES_DB: catalog
     ports:
-      - "5432:5432"
+      - '5432:5432'
     networks:
       - catalog-gql-net
-#  gateway:
-#    image:
-#    environment:
-#      - LOCAL_GQL=catalog-gql
-#      - LOCAL_GQL_URL=catalog-gql:5000
-#      - ENVIRONMENT=${ENVIRONMENT}
-#    ports:
-#      - '5000:5000'
-#    depends_on:
-#      - 'catalog-gql'
-#    links:
-#      - 'catalog-gql'
-#    networks:
-#      - reporting-gql-net
+  gateway:
+    image: registry.heroku.com/marketplace-gateway/web:latest
+    environment:
+      - LOCAL_GQL=catalog-gql
+      - LOCAL_GQL_URL=catalog-gql:5000
+      - ENVIRONMENT=${ENVIRONMENT}
+    ports:
+      - '5000:5000'
+    depends_on:
+      - 'catalog-gql'
+    links:
+      - 'catalog-gql'
+    networks:
+      - catalog-gql-net
   catalog-gql:
     build:
       dockerfile: Dockerfile
       context: .
     image: 'catalog-gql:dev'
     ports:
-      - "5001:5000"
+      - '5001:5000'
     depends_on:
       - 'postgres'
     environment:

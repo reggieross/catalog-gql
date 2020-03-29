@@ -1,7 +1,7 @@
 module.exports = {
     development: {
         client: 'pg',
-        connection: `postgres://intergration-test-user:passw0rd@postgres/catalog`,
+        connection: `${process.env.POSTGRES_DATABASE_URL}`,
         migration: {
             directory: __dirname + '/migrations',
         },

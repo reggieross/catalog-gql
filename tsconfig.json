@@ -9,7 +9,7 @@
     "outDir": "./build",
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noEmitOnError": true,
     "allowJs": true
