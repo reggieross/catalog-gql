@@ -2,13 +2,18 @@ import { ENV } from './env';
 import * as express from 'express';
 import * as cors from 'cors';
 import * as BodyParser from 'body-parser';
+import { server } from './GraphQL';
+import { authentication } from './middleware/authentication';
 
 console.log('Starting up!');
-console.log(ENV);
 
 const app = express();
 app.use(cors());
 app.use(BodyParser());
+
+if (ENV.ENVIRONMENT !== 'local') {
+  app.use(authentication);
+}
 
 app.use('/healthy', async (req, res) => {
   res.send({
@@ -16,7 +21,6 @@ app.use('/healthy', async (req, res) => {
   });
 });
 
-import { server } from './GraphQL';
 server.applyMiddleware({ app, path: '/graphql' });
 
 app.listen({ port: ENV.RUN_PORT }, () => {

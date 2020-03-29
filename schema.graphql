@@ -1,28 +1,37 @@
+enum Role {
+  ADMIN
+  USER
+  SERVICE
+  UNKNOWN
+}
+
+directive @auth(requires: Role = ADMIN) on OBJECT | FIELD_DEFINITION
+
 type Query {
-    getProducts(input: ProductFilterInput): ProductResponse!
+  getProducts(input: ProductFilterInput): ProductResponse!
 }
 
 type ProductResponse {
-    products(input: ProductFilterInput): [Product!]!
-    filters: ProductFilters
+  products(input: ProductFilterInput): [Product!]!
+  filters: ProductFilters
 }
 
 type ProductFilters {
-    category: [Category!]!
+  category: [Category!]!
 }
 
 type Product {
-    id: String
-    name: String
-    category: [Category!]!
+  id: String
+  name: String
+  category: [Category!]!
 }
 
 type Category {
-    id: String
-    name: String
-    product: [Product!]!
+  id: String
+  name: String
+  product: [Product!]!
 }
 
 input ProductFilterInput {
-    categoryIds: [String!]
+  categoryIds: [String!]
 }

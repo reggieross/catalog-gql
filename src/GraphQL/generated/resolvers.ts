@@ -11,6 +11,7 @@ export type Scalars = {
   Float: number,
 };
 
+
 export type Category = {
   __typename?: 'Category',
   id?: Maybe<Scalars['String']>,
@@ -54,6 +55,13 @@ export type Query = {
 export type QueryGetProductsArgs = {
   input?: Maybe<ProductFilterInput>
 };
+
+export enum Role {
+  Admin = 'ADMIN',
+  User = 'USER',
+  Service = 'SERVICE',
+  Unknown = 'UNKNOWN'
+}
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -133,6 +141,7 @@ export type ResolversTypes = {
   Category: ResolverTypeWrapper<Category>,
   ProductFilters: ResolverTypeWrapper<Omit<ProductFilters, 'category'> & { category: Array<ResolversTypes['Category']> }>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
+  Role: Role,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -145,7 +154,10 @@ export type ResolversParentTypes = {
   Category: Category,
   ProductFilters: Omit<ProductFilters, 'category'> & { category: Array<ResolversTypes['Category']> },
   Boolean: Scalars['Boolean'],
+  Role: Role,
 };
+
+export type AuthDirectiveResolver<Result, Parent, ContextType = any, Args = {   requires?: Maybe<Maybe<Role>> }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type CategoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
@@ -186,3 +198,13 @@ export type Resolvers<ContextType = any> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
 */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
+export type DirectiveResolvers<ContextType = any> = {
+  auth?: AuthDirectiveResolver<any, any, ContextType>,
+};
+
+
+/**
+* @deprecated
+* Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
+*/
+export type IDirectiveResolvers<ContextType = any> = DirectiveResolvers<ContextType>;
