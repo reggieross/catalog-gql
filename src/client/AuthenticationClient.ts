@@ -10,7 +10,7 @@ const validateToken = async (token: string) => {
   const res = await HttpClient.get(
     `${ENV.AUTHENTICATION_HOST}/token/validate`,
     {
-      cookie: `accessToken=${token}`,
+      cookie: { access_token: token },
     }
   );
 

@@ -1,15 +1,15 @@
 import { productDataLoader } from './dataloaders/productDataLoader';
 import { categoryDataLoader } from './dataloaders/categoryDataLoader';
 import { ProductService } from '../Service/ProductService';
-import {parse} from "cookie";
+import { CookieMonster } from '../client/CookieClient';
 
 export type Context = ReturnType<typeof context>;
 
 export const context = ({ req }) => {
-  const token = parse(req.headers.cookie || '')['accessToken'] || '';
+  const token = CookieMonster.get(req, 'access_token');
 
-   //TODO use middleWare to add user data to request
-  const userInfo = {}
+  //TODO use middleWare to add user data to request
+  const userInfo = {};
   const productService = new ProductService(userInfo);
 
   return {

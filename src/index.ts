@@ -11,9 +11,7 @@ const app = express();
 app.use(cors());
 app.use(BodyParser());
 
-if (ENV.ENVIRONMENT !== 'local') {
-  app.use(authentication);
-}
+app.use(authentication);
 
 app.use('/healthy', async (req, res) => {
   res.send({

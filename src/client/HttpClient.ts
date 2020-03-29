@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { Response } from 'node-fetch';
+import { CookieMonster, ServiceCookie } from './CookieClient';
 
 export interface ResponseEntity {
   responseObj: any;
@@ -10,14 +11,22 @@ export interface ResponseEntity {
 export class HttpClient {
   public static async get(
     url: string,
-    extraData?: { cookie: string }
+    extraData?: { cookie: ServiceCookie }
   ): Promise<ResponseEntity> {
+    let headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (extraData && extraData.cookie) {
+      headers = {
+        ...headers,
+        Cookies: CookieMonster.encodeCookie(extraData.cookie),
+      };
+    }
+
     return fetch(url, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        cookie: extraData.cookie,
-      },
+      headers,
     }).then(
       async (response: Response) => await HttpClient.handleResponse(response)
     );
