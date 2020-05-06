@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Product, Category } from '../../types';
+import { Product, Brand } from '../../types';
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
@@ -50,7 +50,7 @@ export type ProductFiltersInput = {
 export type ProductResponse = {
   __typename?: 'ProductResponse',
   products: Array<Product>,
-  filters?: Maybe<ProductFilters>,
+  filters: ProductFilters,
 };
 
 
@@ -66,11 +66,6 @@ export type ProductsInput = {
 export type Query = {
   __typename?: 'Query',
   catalog: ProductResponse,
-};
-
-
-export type QueryCatalogArgs = {
-  input?: Maybe<ProductsInput>
 };
 
 export enum Role {
@@ -151,15 +146,15 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
+  ProductResponse: ResolverTypeWrapper<Omit<ProductResponse, 'products' | 'filters'> & { products: Array<ResolversTypes['Product']>, filters: ResolversTypes['ProductFilters'] }>,
   ProductsInput: ProductsInput,
   PaginationInput: PaginationInput,
   LIMIT: Limit,
   Int: ResolverTypeWrapper<Scalars['Int']>,
   ProductFiltersInput: ProductFiltersInput,
   String: ResolverTypeWrapper<Scalars['String']>,
-  ProductResponse: ResolverTypeWrapper<Omit<ProductResponse, 'products' | 'filters'> & { products: Array<ResolversTypes['Product']>, filters?: Maybe<ResolversTypes['ProductFilters']> }>,
   Product: ResolverTypeWrapper<Product>,
-  Brand: ResolverTypeWrapper<Omit<Brand, 'product'> & { product: Array<ResolversTypes['Product']> }>,
+  Brand: ResolverTypeWrapper<Brand>,
   ProductFilters: ResolverTypeWrapper<Omit<ProductFilters, 'brand'> & { brand: Array<ResolversTypes['Brand']> }>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Role: Role,
@@ -168,15 +163,15 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {},
+  ProductResponse: Omit<ProductResponse, 'products' | 'filters'> & { products: Array<ResolversTypes['Product']>, filters: ResolversTypes['ProductFilters'] },
   ProductsInput: ProductsInput,
   PaginationInput: PaginationInput,
   LIMIT: Limit,
   Int: Scalars['Int'],
   ProductFiltersInput: ProductFiltersInput,
   String: Scalars['String'],
-  ProductResponse: Omit<ProductResponse, 'products' | 'filters'> & { products: Array<ResolversTypes['Product']>, filters?: Maybe<ResolversTypes['ProductFilters']> },
   Product: Product,
-  Brand: Omit<Brand, 'product'> & { product: Array<ResolversTypes['Product']> },
+  Brand: Brand,
   ProductFilters: Omit<ProductFilters, 'brand'> & { brand: Array<ResolversTypes['Brand']> },
   Boolean: Scalars['Boolean'],
   Role: Role,
@@ -203,11 +198,11 @@ export type ProductFiltersResolvers<ContextType = any, ParentType extends Resolv
 
 export type ProductResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductResponse'] = ResolversParentTypes['ProductResponse']> = {
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType, ProductResponseProductsArgs>,
-  filters?: Resolver<Maybe<ResolversTypes['ProductFilters']>, ParentType, ContextType>,
+  filters?: Resolver<ResolversTypes['ProductFilters'], ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  catalog?: Resolver<ResolversTypes['ProductResponse'], ParentType, ContextType, QueryCatalogArgs>,
+  catalog?: Resolver<ResolversTypes['ProductResponse'], ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {

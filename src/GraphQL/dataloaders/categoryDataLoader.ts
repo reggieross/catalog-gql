@@ -1,10 +1,10 @@
 import * as DataLoader from 'dataloader';
-import {Category} from "../../types";
+import {Brand} from "../../types";
 
 export const categoryDataLoader = (xToken: string) => {
   return new DataLoader(
     async (ids: string[]) => {
-      const category: Category[] = [{
+      const category: Brand[] = [{
         id: 'some-id',
         name: 'some-name',
       }];

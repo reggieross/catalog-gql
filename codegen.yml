@@ -7,7 +7,7 @@ generates:
     config:
       mappers:
         Product: ../../types#Product
-        Category: ../../types#Category
+        Brand: ../../types#Brand
     plugins:
       - typescript
       - typescript-resolvers

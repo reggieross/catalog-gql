@@ -4,7 +4,7 @@ export interface Product {
   brandId?: string
 }
 
-export interface Category {
+export interface Brand {
   id: string
   name: string
 }
