@@ -14,7 +14,7 @@ enum LIMIT {
 directive @auth(requires: Role = ADMIN) on OBJECT | FIELD_DEFINITION
 
 type Query {
-  getProducts(input: ProductsInput): ProductResponse!
+  catalog(input: ProductsInput): ProductResponse!
 }
 
 type ProductResponse {

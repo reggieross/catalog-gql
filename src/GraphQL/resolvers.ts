@@ -3,7 +3,7 @@ import { Resolvers } from './generated/resolvers';
 
 export const resolvers: Resolvers<Context> = {
   Query: {
-    getProducts: async (_, { input }, ctx) => {
+    catalog: async (_, { input }, ctx) => {
       const products = await ctx.catalogService.getProductsForUser(input);
       return { products };
     },

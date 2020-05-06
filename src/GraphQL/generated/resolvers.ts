@@ -65,11 +65,11 @@ export type ProductsInput = {
 
 export type Query = {
   __typename?: 'Query',
-  getProducts: ProductResponse,
+  catalog: ProductResponse,
 };
 
 
-export type QueryGetProductsArgs = {
+export type QueryCatalogArgs = {
   input?: Maybe<ProductsInput>
 };
 
@@ -207,7 +207,7 @@ export type ProductResponseResolvers<ContextType = any, ParentType extends Resol
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getProducts?: Resolver<ResolversTypes['ProductResponse'], ParentType, ContextType, QueryGetProductsArgs>,
+  catalog?: Resolver<ResolversTypes['ProductResponse'], ParentType, ContextType, QueryCatalogArgs>,
 };
 
 export type Resolvers<ContextType = any> = {
