@@ -5,33 +5,50 @@ enum Role {
   UNKNOWN
 }
 
+enum LIMIT {
+  FIFTY
+  ONE_HUNDRED
+  FIVE_HUNDRED
+}
+
 directive @auth(requires: Role = ADMIN) on OBJECT | FIELD_DEFINITION
 
 type Query {
-  getProducts(input: ProductFilterInput): ProductResponse!
+  getProducts(input: ProductsInput): ProductResponse!
 }
 
 type ProductResponse {
-  products(input: ProductFilterInput): [Product!]!
+  products(input: ProductsInput): [Product!]!
   filters: ProductFilters
 }
 
 type ProductFilters {
-  category: [Category!]!
+  total: Int
+  brand: [Brand!]!
 }
 
 type Product {
   id: String
   name: String
-  category: [Category!]!
+  Brand: [Brand!]!
 }
 
-type Category @auth {
+type Brand {
   id: String
   name: String
   product: [Product!]!
 }
 
-input ProductFilterInput {
-  categoryIds: [String!]
+input ProductsInput {
+  pageInfo: PaginationInput
+  filters: ProductFiltersInput
+}
+
+input PaginationInput {
+  limit: LIMIT!
+  page: Int!
+}
+
+input ProductFiltersInput {
+  brandIds: [String!]
 }

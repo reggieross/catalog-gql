@@ -12,27 +12,39 @@ export type Scalars = {
 };
 
 
-export type Category = {
-  __typename?: 'Category',
+export type Brand = {
+  __typename?: 'Brand',
   id?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   product: Array<Product>,
+};
+
+export enum Limit {
+  Fifty = 'FIFTY',
+  OneHundred = 'ONE_HUNDRED',
+  FiveHundred = 'FIVE_HUNDRED'
+}
+
+export type PaginationInput = {
+  limit: Limit,
+  page: Scalars['Int'],
 };
 
 export type Product = {
   __typename?: 'Product',
   id?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
-  category: Array<Category>,
-};
-
-export type ProductFilterInput = {
-  categoryIds?: Maybe<Array<Scalars['String']>>,
+  Brand: Array<Brand>,
 };
 
 export type ProductFilters = {
   __typename?: 'ProductFilters',
-  category: Array<Category>,
+  total?: Maybe<Scalars['Int']>,
+  brand: Array<Brand>,
+};
+
+export type ProductFiltersInput = {
+  brandIds?: Maybe<Array<Scalars['String']>>,
 };
 
 export type ProductResponse = {
@@ -43,7 +55,12 @@ export type ProductResponse = {
 
 
 export type ProductResponseProductsArgs = {
-  input?: Maybe<ProductFilterInput>
+  input?: Maybe<ProductsInput>
+};
+
+export type ProductsInput = {
+  pageInfo?: Maybe<PaginationInput>,
+  filters?: Maybe<ProductFiltersInput>,
 };
 
 export type Query = {
@@ -53,7 +70,7 @@ export type Query = {
 
 
 export type QueryGetProductsArgs = {
-  input?: Maybe<ProductFilterInput>
+  input?: Maybe<ProductsInput>
 };
 
 export enum Role {
@@ -134,12 +151,16 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
-  ProductFilterInput: ProductFilterInput,
+  ProductsInput: ProductsInput,
+  PaginationInput: PaginationInput,
+  LIMIT: Limit,
+  Int: ResolverTypeWrapper<Scalars['Int']>,
+  ProductFiltersInput: ProductFiltersInput,
   String: ResolverTypeWrapper<Scalars['String']>,
   ProductResponse: ResolverTypeWrapper<Omit<ProductResponse, 'products' | 'filters'> & { products: Array<ResolversTypes['Product']>, filters?: Maybe<ResolversTypes['ProductFilters']> }>,
   Product: ResolverTypeWrapper<Product>,
-  Category: ResolverTypeWrapper<Category>,
-  ProductFilters: ResolverTypeWrapper<Omit<ProductFilters, 'category'> & { category: Array<ResolversTypes['Category']> }>,
+  Brand: ResolverTypeWrapper<Omit<Brand, 'product'> & { product: Array<ResolversTypes['Product']> }>,
+  ProductFilters: ResolverTypeWrapper<Omit<ProductFilters, 'brand'> & { brand: Array<ResolversTypes['Brand']> }>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Role: Role,
 };
@@ -147,19 +168,23 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {},
-  ProductFilterInput: ProductFilterInput,
+  ProductsInput: ProductsInput,
+  PaginationInput: PaginationInput,
+  LIMIT: Limit,
+  Int: Scalars['Int'],
+  ProductFiltersInput: ProductFiltersInput,
   String: Scalars['String'],
   ProductResponse: Omit<ProductResponse, 'products' | 'filters'> & { products: Array<ResolversTypes['Product']>, filters?: Maybe<ResolversTypes['ProductFilters']> },
   Product: Product,
-  Category: Category,
-  ProductFilters: Omit<ProductFilters, 'category'> & { category: Array<ResolversTypes['Category']> },
+  Brand: Omit<Brand, 'product'> & { product: Array<ResolversTypes['Product']> },
+  ProductFilters: Omit<ProductFilters, 'brand'> & { brand: Array<ResolversTypes['Brand']> },
   Boolean: Scalars['Boolean'],
   Role: Role,
 };
 
 export type AuthDirectiveResolver<Result, Parent, ContextType = any, Args = {   requires?: Maybe<Maybe<Role>> }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type CategoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
+export type BrandResolvers<ContextType = any, ParentType extends ResolversParentTypes['Brand'] = ResolversParentTypes['Brand']> = {
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   product?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType>,
@@ -168,11 +193,12 @@ export type CategoryResolvers<ContextType = any, ParentType extends ResolversPar
 export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  category?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>,
+  Brand?: Resolver<Array<ResolversTypes['Brand']>, ParentType, ContextType>,
 };
 
 export type ProductFiltersResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductFilters'] = ResolversParentTypes['ProductFilters']> = {
-  category?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>,
+  total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  brand?: Resolver<Array<ResolversTypes['Brand']>, ParentType, ContextType>,
 };
 
 export type ProductResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductResponse'] = ResolversParentTypes['ProductResponse']> = {
@@ -185,7 +211,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type Resolvers<ContextType = any> = {
-  Category?: CategoryResolvers<ContextType>,
+  Brand?: BrandResolvers<ContextType>,
   Product?: ProductResolvers<ContextType>,
   ProductFilters?: ProductFiltersResolvers<ContextType>,
   ProductResponse?: ProductResponseResolvers<ContextType>,
