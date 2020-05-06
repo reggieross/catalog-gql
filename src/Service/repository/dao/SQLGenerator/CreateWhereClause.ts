@@ -55,5 +55,5 @@ const getStringValueForStringFilter = (
   propertyName: string,
   columnName: string
 ) => {
-  return `${table}.${columnName} in $(${propertyName})`;
+  return `${table}.${columnName} in ($(${propertyName}:csv))`;
 };

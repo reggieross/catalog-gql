@@ -7,7 +7,7 @@ export const productDataLoader = (
 ) => {
   return new DataLoader(
     async (ids: string[]) => {
-      const products = await catalogService.getProductsForUser();
+      const products = await catalogService.getProductsForUser({});
       return ids.map(id => products[id] || null);
     },
     {
