@@ -1,7 +1,10 @@
 import { getDB } from './db';
 import { Dao, Product } from '../../../types';
 import { SQLGenerator } from './SQLGenerator/SQLGenerator';
-import { ProductFiltersInput } from '../../../GraphQL/generated/resolvers';
+import {
+  ProductFiltersInput,
+  ProductsInput,
+} from '../../../GraphQL/generated/resolvers';
 
 interface ProductEntity {
   id: string;
@@ -10,12 +13,13 @@ interface ProductEntity {
   name: string;
 }
 
-const list = async (where: ProductFiltersInput): Promise<Product[]> => {
-  const { query, queryInput } = await SQLGenerator.genSQL('product', [
-    'id',
-    'brandId',
-    'name',
-  ]);
+const list = async (where: ProductsInput): Promise<Product[]> => {
+  const { query, queryInput } = await SQLGenerator.genSQL(
+    'product',
+    ['id', 'brandId', 'name'],
+    where.filters,
+    where.pageInfo
+  );
   const rows: ProductEntity[] = await getDB().any(query, queryInput);
   return transform(rows);
 };
@@ -30,6 +34,6 @@ const transform = (entities: ProductEntity[]): Product[] => {
   });
 };
 
-export const ProductDao: Dao<Product, ProductFiltersInput> = {
+export const ProductDao: Dao<Product, ProductsInput> = {
   list,
 };

@@ -1,5 +1,6 @@
 import { ProductRepository } from "./repository/ProductRepository";
 import {Product} from "../types";
+import {ProductsInput} from "../GraphQL/generated/resolvers";
 
 export interface CatalogService {
 
@@ -11,7 +12,7 @@ export class CatalogService {
     this.repo = ProductRepository;
   }
 
-  getProductsForUser = (): Promise<Product[]> => {
-    return this.repo.getProductsForUser();
+  getProductsForUser = (where: ProductsInput): Promise<Product[]> => {
+    return this.repo.getProductsForUser(where);
   };
 }
