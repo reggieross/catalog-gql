@@ -19,11 +19,36 @@ export type Brand = {
   product: Array<Product>,
 };
 
+export type CatalogMutationResponse = {
+  __typename?: 'CatalogMutationResponse',
+  likeProduct?: Maybe<LikeProductResponse>,
+};
+
+
+export type CatalogMutationResponseLikeProductArgs = {
+  input?: Maybe<LikeProductInput>
+};
+
+export type LikeProductInput = {
+  productId: Scalars['String'],
+  liked: Scalars['Boolean'],
+};
+
+export type LikeProductResponse = {
+  __typename?: 'LikeProductResponse',
+  success?: Maybe<Scalars['Boolean']>,
+};
+
 export enum Limit {
   Fifty = 'FIFTY',
   OneHundred = 'ONE_HUNDRED',
   FiveHundred = 'FIVE_HUNDRED'
 }
+
+export type Mutation = {
+  __typename?: 'Mutation',
+  catalog: CatalogMutationResponse,
+};
 
 export type PaginationInput = {
   limit: Limit,
@@ -156,7 +181,11 @@ export type ResolversTypes = {
   Product: ResolverTypeWrapper<Product>,
   Brand: ResolverTypeWrapper<Brand>,
   ProductFilters: ResolverTypeWrapper<Omit<ProductFilters, 'brand'> & { brand: Array<ResolversTypes['Brand']> }>,
+  Mutation: ResolverTypeWrapper<{}>,
+  CatalogMutationResponse: ResolverTypeWrapper<CatalogMutationResponse>,
+  LikeProductInput: LikeProductInput,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
+  LikeProductResponse: ResolverTypeWrapper<LikeProductResponse>,
   Role: Role,
 };
 
@@ -173,7 +202,11 @@ export type ResolversParentTypes = {
   Product: Product,
   Brand: Brand,
   ProductFilters: Omit<ProductFilters, 'brand'> & { brand: Array<ResolversTypes['Brand']> },
+  Mutation: {},
+  CatalogMutationResponse: CatalogMutationResponse,
+  LikeProductInput: LikeProductInput,
   Boolean: Scalars['Boolean'],
+  LikeProductResponse: LikeProductResponse,
   Role: Role,
 };
 
@@ -183,6 +216,18 @@ export type BrandResolvers<ContextType = any, ParentType extends ResolversParent
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   product?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType>,
+};
+
+export type CatalogMutationResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CatalogMutationResponse'] = ResolversParentTypes['CatalogMutationResponse']> = {
+  likeProduct?: Resolver<Maybe<ResolversTypes['LikeProductResponse']>, ParentType, ContextType, CatalogMutationResponseLikeProductArgs>,
+};
+
+export type LikeProductResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['LikeProductResponse'] = ResolversParentTypes['LikeProductResponse']> = {
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+};
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  catalog?: Resolver<ResolversTypes['CatalogMutationResponse'], ParentType, ContextType>,
 };
 
 export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
@@ -207,6 +252,9 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type Resolvers<ContextType = any> = {
   Brand?: BrandResolvers<ContextType>,
+  CatalogMutationResponse?: CatalogMutationResponseResolvers<ContextType>,
+  LikeProductResponse?: LikeProductResponseResolvers<ContextType>,
+  Mutation?: MutationResolvers<ContextType>,
   Product?: ProductResolvers<ContextType>,
   ProductFilters?: ProductFiltersResolvers<ContextType>,
   ProductResponse?: ProductResponseResolvers<ContextType>,

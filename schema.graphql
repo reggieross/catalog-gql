@@ -17,6 +17,14 @@ type Query {
   catalog: ProductResponse!
 }
 
+type Mutation {
+  catalog: CatalogMutationResponse!
+}
+
+type CatalogMutationResponse {
+  likeProduct(input: LikeProductInput): LikeProductResponse
+}
+
 type ProductResponse {
   products(input: ProductsInput): [Product!]!
   filters: ProductFilters!
@@ -39,6 +47,11 @@ type Brand {
   product: [Product!]!
 }
 
+type LikeProductResponse {
+  success: Boolean
+}
+
+# INPUTS
 input ProductsInput {
   pageInfo: PaginationInput
   filters: ProductFiltersInput
@@ -51,4 +64,9 @@ input PaginationInput {
 
 input ProductFiltersInput {
   brandIds: [String!]
+}
+
+input LikeProductInput {
+  productId: String!
+  liked: Boolean!
 }

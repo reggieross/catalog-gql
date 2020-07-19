@@ -1,6 +1,6 @@
 import { SchemaDirectiveVisitor } from 'apollo-server';
 import { defaultFieldResolver } from 'graphql';
-import { AuthenticationClient } from '../client/AuthenticationClient';
+import { AuthorizationClient } from '../client/AuthorizationClient';
 
 export class AuthDirective extends SchemaDirectiveVisitor {
   visitObject(type) {
@@ -40,7 +40,7 @@ export class AuthDirective extends SchemaDirectiveVisitor {
 
         // The second argument in the resolver function is always the context;
         const context = args[2];
-        const validForRoles = await AuthenticationClient.isValidForRoles(
+        const validForRoles = await AuthorizationClient.isValidForRoles(
           context.token,
           [requiredRole]
         );

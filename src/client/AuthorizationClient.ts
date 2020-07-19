@@ -13,4 +13,4 @@ const decodeToken = (token: string): { roles: Role[] } => {
   return { roles: [] };
 };
 
-export const AuthenticationClient = { isValidForRoles };
+export const AuthorizationClient = { isValidForRoles };
