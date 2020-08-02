@@ -28,6 +28,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
+      args:
+        - NPM_TOKEN=$NPM_TOKEN
     image: 'catalog-gql:dev'
     ports:
       - '5001:5000'

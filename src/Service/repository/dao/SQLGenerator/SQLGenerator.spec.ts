@@ -21,7 +21,7 @@ describe('SQL Generator', () => {
       }
     );
     expect(query).toEqual(
-      'Select product.name from product Where product.brand_id in $(brandIds) Limit 50 offset 0;'
+      'Select product.name from product Where product.brand_id in ($(brandIds:csv)) Limit 50 offset 0;'
     );
     expect(queryInput).toEqual({ brandIds: ['some-brand'] });
   });
@@ -39,7 +39,7 @@ describe('SQL Generator', () => {
       }
     );
     expect(query).toEqual(
-      'Select product.name from product Where product.brand_id in $(brandIds) Limit 500 offset 500;'
+      'Select product.name from product Where product.brand_id in ($(brandIds:csv)) Limit 500 offset 500;'
     );
     expect(queryInput).toEqual({ brandIds: ['some-brand'] });
   });

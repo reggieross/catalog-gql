@@ -5,6 +5,7 @@ FROM node:12.10.0 as build
 WORKDIR /app
 
 #install app dependencies (wildard to get package.json and package-lock.json)
+ARG NPM_TOKEN
 COPY package*.json .npmrc tsconfig.json ./
 RUN npm install
 
@@ -19,7 +20,7 @@ RUN npm run build
 FROM node:12.10.0 as dependencies
 
 WORKDIR /app
-
+ARG NPM_TOKEN
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/.npmrc ./
 RUN npm ci
@@ -44,6 +45,8 @@ COPY knexfile.js ./
 COPY knexfile_local.js ./
 COPY jest.integration.config.json ./
 COPY jest.unit.config.json ./
+COPY schema.graphql ./
+COPY codegen.yml ./
 
 EXPOSE 5000
 
