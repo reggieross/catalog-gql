@@ -6,6 +6,7 @@ export interface Table {
 export type TableConfig = {
   product: Table;
   brand: Table;
+  price: Table;
 };
 
 export const Tables: TableConfig = {
@@ -24,4 +25,14 @@ export const Tables: TableConfig = {
       name: 'name',
     },
   },
+  price: {
+    name: 'price',
+    propertyMapping: {
+      id: 'id',
+      amount: 'amount',
+      currency: 'currency',
+      site: 'site',
+      productId: 'product_id'
+    }
+  }
 };

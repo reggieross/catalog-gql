@@ -7,10 +7,12 @@ import {
 } from '../../../../GraphQL/generated/resolvers';
 import { createPagination } from './CreatePaginationClause';
 
+export type TFilters = ProductFiltersInput | { productIds: string[] };
+
 const genSQL = async (
   table: keyof TableConfig,
   properties: string[],
-  filters: ProductFiltersInput = {},
+  filters: TFilters = {},
   paginationInfo?: PaginationInput
 ): Promise<{ query: string; queryInput?: Record<string, any> }> => {
   const [select, where] = await Promise.all([
@@ -19,7 +21,8 @@ const genSQL = async (
   ]);
   const limit = createPagination(paginationInfo);
   return {
-    query: where.length > 0 ? `${select} ${where} ${limit};` : `${select} ${limit};`,
+    query:
+      where.length > 0 ? `${select} ${where} ${limit};` : `${select} ${limit};`,
     queryInput: filters,
   };
 };

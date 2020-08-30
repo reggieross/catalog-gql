@@ -9,6 +9,13 @@ export interface Brand {
   name: string
 }
 
+export interface Price {
+  amount: string;
+  url: string;
+  site: string;
+  currency?: string;
+}
+
 export type Environment = 'local' | 'dev' | 'prd';
 
 export interface Dao<T, U> {

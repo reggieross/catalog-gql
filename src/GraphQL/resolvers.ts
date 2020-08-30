@@ -27,6 +27,11 @@ export const resolvers: Resolvers<Context> = {
       return products;
     },
   },
+  Product: {
+    Price: async (prev, _, ctx) => {
+      return ctx.catalogService.getPricesForProduct(prev.id);
+    },
+  },
   CatalogMutationResponse: {
     likeProduct: async (prev, { input }, ctx) => {
       console.log(ctx.token);

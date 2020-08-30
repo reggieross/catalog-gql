@@ -39,12 +39,20 @@ type Product {
   id: String
   name: String
   Brand: [Brand!]!
+  Price: [Price!]!
 }
 
 type Brand {
   id: String
   name: String
   product: [Product!]!
+}
+
+type Price {
+  amount: String
+  url: String
+  site: String
+  currency: String
 }
 
 type LikeProductResponse {

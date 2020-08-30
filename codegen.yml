@@ -8,6 +8,7 @@ generates:
       mappers:
         Product: ../../types#Product
         Brand: ../../types#Brand
+        Price: ../../types#Price
     plugins:
       - typescript
       - typescript-resolvers

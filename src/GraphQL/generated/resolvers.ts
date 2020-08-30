@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Product, Brand } from '../../types';
+import { Product, Brand, Price } from '../../types';
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
@@ -55,11 +55,20 @@ export type PaginationInput = {
   page: Scalars['Int'],
 };
 
+export type Price = {
+  __typename?: 'Price',
+  amount?: Maybe<Scalars['String']>,
+  url?: Maybe<Scalars['String']>,
+  site?: Maybe<Scalars['String']>,
+  currency?: Maybe<Scalars['String']>,
+};
+
 export type Product = {
   __typename?: 'Product',
   id?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   Brand: Array<Brand>,
+  Price: Array<Price>,
 };
 
 export type ProductFilters = {
@@ -180,6 +189,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>,
   Product: ResolverTypeWrapper<Product>,
   Brand: ResolverTypeWrapper<Brand>,
+  Price: ResolverTypeWrapper<Price>,
   ProductFilters: ResolverTypeWrapper<Omit<ProductFilters, 'brand'> & { brand: Array<ResolversTypes['Brand']> }>,
   Mutation: ResolverTypeWrapper<{}>,
   CatalogMutationResponse: ResolverTypeWrapper<CatalogMutationResponse>,
@@ -201,6 +211,7 @@ export type ResolversParentTypes = {
   String: Scalars['String'],
   Product: Product,
   Brand: Brand,
+  Price: Price,
   ProductFilters: Omit<ProductFilters, 'brand'> & { brand: Array<ResolversTypes['Brand']> },
   Mutation: {},
   CatalogMutationResponse: CatalogMutationResponse,
@@ -230,10 +241,18 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   catalog?: Resolver<ResolversTypes['CatalogMutationResponse'], ParentType, ContextType>,
 };
 
+export type PriceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Price'] = ResolversParentTypes['Price']> = {
+  amount?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  site?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  currency?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+};
+
 export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   Brand?: Resolver<Array<ResolversTypes['Brand']>, ParentType, ContextType>,
+  Price?: Resolver<Array<ResolversTypes['Price']>, ParentType, ContextType>,
 };
 
 export type ProductFiltersResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductFilters'] = ResolversParentTypes['ProductFilters']> = {
@@ -255,6 +274,7 @@ export type Resolvers<ContextType = any> = {
   CatalogMutationResponse?: CatalogMutationResponseResolvers<ContextType>,
   LikeProductResponse?: LikeProductResponseResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
+  Price?: PriceResolvers<ContextType>,
   Product?: ProductResolvers<ContextType>,
   ProductFilters?: ProductFiltersResolvers<ContextType>,
   ProductResponse?: ProductResponseResolvers<ContextType>,

@@ -1,9 +1,9 @@
 import { TableConfig } from './config/TableConfig';
-import { ProductFiltersInput } from '../../../../GraphQL/generated/resolvers';
+import {TFilters} from "./SQLGenerator";
 
 export const createWhere = async (
   table: keyof TableConfig,
-  filters: ProductFiltersInput = {}
+  filters: TFilters = {}
 ): Promise<string> => {
   const allFilters = Object.entries(filters);
   if (allFilters.length === 0) {
@@ -15,12 +15,12 @@ export const createWhere = async (
 
 const transformFilters = (
   table: keyof TableConfig,
-  filters: ProductFiltersInput
+  filters: TFilters
 ): string[] => {
   return Object.keys(filters).reduce((acc, property) => {
     const transformedFilter = transformFilter(
       table,
-      property as keyof ProductFiltersInput
+      property as keyof TFilters
     );
 
     if (transformedFilter) {
@@ -32,11 +32,13 @@ const transformFilters = (
 
 const transformFilter = (
   table: string,
-  property: keyof ProductFiltersInput
+  property: keyof TFilters
 ): string => {
   switch (property) {
     case 'brandIds':
       return getStringValueForStringFilter(table, property, 'brand_id');
+    case 'productIds':
+      return getStringValueForStringFilter(table, property, 'product_id');
   }
 
   return undefined;
