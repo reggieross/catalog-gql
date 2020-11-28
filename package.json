@@ -7,11 +7,9 @@
     "generate": "gql-gen",
     "build": "tsc && npm run generate",
     "start": "node ./build/index.js",
-    "test": "npm run test:unit && ./scripts/integration_test.sh && ./scripts/smoke_test.sh",
     "test:integration": "npm run migrate:local && jest --config=jest.integration.config.json --passWithNoTests --forceExit --ci",
-    "test:unit": "jest --config=jest.unit.config.json --passWithNoTests --forceExit --ci",
-    "migrate:local": "knex migrate:latest --knexfile ./knexfile_local.js --env development && npx knex seed:run --env development --knexfile ./knexfile_local.js ",
-    "migrate": "knex migrate:latest --env development && npx knex seed:run --env development"
+    "test:unit": "jest --config=jest.unit.config.json --passWithNoTests --forceExit --ci --coverage",
+    "migrate:local": "knex migrate:latest --knexfile ./knexfile_local.js --env development && npx knex seed:run --env development --knexfile ./knexfile_local.js "
   },
   "keywords": [],
   "author": "",
@@ -52,6 +50,10 @@
   "jest": {
     "roots": [
       "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src",
+      "!<rootDir>/src/Service/repository/dao"
     ],
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest"

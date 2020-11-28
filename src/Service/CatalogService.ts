@@ -24,7 +24,7 @@ export class CatalogService {
     return this.brandRepo.getBrands();
   };
 
-  getPricesForProduct = (productId: string): Promise<Price[]> => {
-    return this.priceRepoo.getPriceForBrand(`${productId}`);
+  getPricesForProduct = (productId: string | number): Promise<Price[]> => {
+    return this.priceRepoo.getPriceForProduct(`${productId}`);
   };
 }
